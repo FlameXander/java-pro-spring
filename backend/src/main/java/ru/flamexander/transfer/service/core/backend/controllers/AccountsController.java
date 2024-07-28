@@ -32,7 +32,10 @@ public class AccountsController {
 
     @GetMapping("/{id}")
     public AccountDto getAccountDetails(@RequestHeader Long clientId, @PathVariable Long id) {
-        return accountsService.getAccountById(clientId, id).map(entityToDto).orElseThrow(() -> new ResourceNotFoundException("Счет не найден"));
+        if (id > 1000000) {  // приходит или accountNumber или id
+            return accountsService.getAccountByAccountNumber(id.toString(), clientId).map(entityToDto).orElseThrow(() -> new ResourceNotFoundException("Счет не найден"));
+        } else
+            return accountsService.getAccountById(clientId, id).map(entityToDto).orElseThrow(() -> new ResourceNotFoundException("Счет не найден"));
     }
 
     @Operation(summary = "Получение информации о всех счетах пользователя")

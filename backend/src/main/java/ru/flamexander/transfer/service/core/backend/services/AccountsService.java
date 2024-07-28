@@ -9,6 +9,7 @@ import ru.flamexander.transfer.service.core.backend.entities.Account;
 import ru.flamexander.transfer.service.core.backend.errors.AppLogicException;
 import ru.flamexander.transfer.service.core.backend.repositories.AccountsRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,11 +28,17 @@ public class AccountsService {
         return accountsRepository.findByIdAndClientId(id, clientId);
     }
 
+    public Optional<Account> getAccountByAccountNumber(String accountNumber,Long clientId) {
+        return accountsRepository.findByAccountNumberAndClientId(accountNumber, clientId);
+    }
+
     public Account createNewAccount(Long clientId, CreateAccountDto createAccountDto) {
         if (createAccountDto.getInitialBalance() == null) {
             throw new AppLogicException("VALIDATION_ERROR", "Создаваемый счет не может иметь null баланс");
         }
         Account account = new Account(clientId, createAccountDto.getInitialBalance());
+        account = accountsRepository.save(account);
+        account.setAccountNumber("12345678900" + account.getId().toString());
         account = accountsRepository.save(account);
         logger.info("Account id = {} created from {}", account.getId(), createAccountDto);
         return account;
