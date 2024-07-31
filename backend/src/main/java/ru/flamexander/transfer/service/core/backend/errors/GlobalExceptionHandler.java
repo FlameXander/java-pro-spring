@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.stream.Collectors;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -20,7 +22,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(FieldsValidationException.class)
     public ResponseEntity<FieldsValidationErrorDto> catchFieldsValidationException(FieldsValidationException e) {
-        FieldsValidationErrorDto fieldsValidationErrorDto = new FieldsValidationErrorDto(e.getFields());
+        String errors = e.getFields().stream().map(x -> x.getFieldName() + ": " + x.getMessage() + "   ").collect(Collectors.joining());
+     //   FieldsValidationErrorDto fieldsValidationErrorDto = new FieldsValidationErrorDto(e.getFields());
+        FieldsValidationErrorDto fieldsValidationErrorDto = new FieldsValidationErrorDto(errors);
         return new ResponseEntity<>(fieldsValidationErrorDto, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }

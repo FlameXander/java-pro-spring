@@ -1,6 +1,8 @@
 package ru.flamexander.transfer.service.core.backend.errors;
 
+import lombok.Data;
 
+@Data
 public class FieldValidationError {
     private String fieldName;
     private String message;
