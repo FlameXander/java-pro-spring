@@ -23,8 +23,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FieldsValidationException.class)
     public ResponseEntity<FieldsValidationErrorDto> catchFieldsValidationException(FieldsValidationException e) {
         String errors = e.getFields().stream().map(x -> x.getFieldName() + ": " + x.getMessage() + "   ").collect(Collectors.joining());
-     //   FieldsValidationErrorDto fieldsValidationErrorDto = new FieldsValidationErrorDto(e.getFields());
-        FieldsValidationErrorDto fieldsValidationErrorDto = new FieldsValidationErrorDto(errors);
+        FieldsValidationErrorDto fieldsValidationErrorDto = new FieldsValidationErrorDto(e.getFields());
+     //   FieldsValidationErrorDto fieldsValidationErrorDto = new FieldsValidationErrorDto(errors);
         return new ResponseEntity<>(fieldsValidationErrorDto, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }
