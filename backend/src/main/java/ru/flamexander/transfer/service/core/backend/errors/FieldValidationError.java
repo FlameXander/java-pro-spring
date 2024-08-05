@@ -1,8 +1,8 @@
 package ru.flamexander.transfer.service.core.backend.errors;
 
 public class FieldValidationError {
-    private String fieldName;
-    private String message;
+    private final String fieldName;
+    private final String message;
 
     public FieldValidationError(String fieldName, String message) {
         this.fieldName = fieldName;

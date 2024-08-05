@@ -1,11 +1,10 @@
 package ru.flamexander.transfer.service.core.backend.errors;
 
-public class AppLogicException extends RuntimeException {
-    private String code;
+import lombok.Getter;
 
-    public String getCode() {
-        return code;
-    }
+@Getter
+public class AppLogicException extends RuntimeException {
+    private final String code;
 
     public AppLogicException(String code, String message) {
         super(message);
