@@ -14,8 +14,26 @@ create table clients
     fio varchar(255)
 );
 
+create table transfers
+(
+    id                          bigserial primary key,
+    sender_id                   bigint,
+    sender_account              varchar(16),
+    recipient_id                bigint,
+    recipient_account           varchar(16),
+    amount                      numeric(6, 2),
+    status                      varchar(11),
+    date                        timestamp
+);
+
 insert into clients (fio)
-values ('A A A');
+values
+('A A A'),
+
+
 
 insert into accounts (client_id, account_number, balance)
-values (1, '1234123412341234', 1000);
+values
+(1, '1234123412341234', 1000),
+
+
