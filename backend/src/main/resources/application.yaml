@@ -15,3 +15,8 @@ spring:
 integrations:
   clients-info-service:
     url: "http://localhost:8190/api/v1/clients"
+  limits-service:
+    check-limit:
+      url: "http://localhost:8191/api/v1/limits/check"
+    return-limit:
+      url: "http://localhost:8191/api/v1/limits/return"
