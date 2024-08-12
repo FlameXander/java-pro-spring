@@ -2,7 +2,6 @@ package ru.flamexander.transfer.service.core.backend.services;
 
 import ru.flamexander.transfer.service.core.api.dtos.ExecuteTransferDtoRequest;
 import ru.flamexander.transfer.service.core.backend.dtos.TransferDto;
-import ru.flamexander.transfer.service.core.backend.dtos.TransferDto0;
 
 import java.util.List;
 

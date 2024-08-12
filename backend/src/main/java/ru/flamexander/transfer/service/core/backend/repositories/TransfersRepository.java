@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.flamexander.transfer.service.core.backend.dtos.TransferDto;
-import ru.flamexander.transfer.service.core.backend.dtos.TransferDto0;
 import ru.flamexander.transfer.service.core.backend.entities.Transfer;
 
 import java.util.List;

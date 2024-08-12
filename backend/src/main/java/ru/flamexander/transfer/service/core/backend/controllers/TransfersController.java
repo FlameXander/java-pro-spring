@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.flamexander.transfer.service.core.api.dtos.ExecuteTransferDtoRequest;
 import ru.flamexander.transfer.service.core.backend.dtos.TransferDto;
-import ru.flamexander.transfer.service.core.backend.dtos.TransferDto0;
 import ru.flamexander.transfer.service.core.backend.services.TransfersService;
 
 import java.util.List;
