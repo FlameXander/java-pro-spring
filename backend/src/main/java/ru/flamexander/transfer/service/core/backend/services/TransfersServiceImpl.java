@@ -25,8 +25,8 @@ public class TransfersServiceImpl implements TransfersService {
         if (clientsInfoService.isClientBlocker(executeTransferDtoRequest.getReceiverId())) {
             throw new AppLogicException("RECEIVER_IS_BLOCKED", "Невозможно выполнить перевод заблокированному клиенту с id = " + executeTransferDtoRequest.getReceiverId());
         }
-        if (!limitService.hasLimit(clientId, executeTransferDtoRequest.getTransferSum())){
-            throw new AppLogicException("NO_HAS_LIMIT", "У клиента исчерпан лимит переводов");
+        if (!limitService.getLimit(clientId, executeTransferDtoRequest.getTransferSum())){
+            throw new AppLogicException("NO_HAS_SENDER_LIMIT", "У клиента id = " + clientId + " исчерпан лимит переводов. Перевод суммы " + executeTransferDtoRequest.getTransferSum()+ " невозможен");
         }
 
         try {
@@ -36,7 +36,7 @@ public class TransfersServiceImpl implements TransfersService {
             senderAccount.setBalance(senderAccount.getBalance().subtract(executeTransferDtoRequest.getTransferSum()));
             receiverAccount.setBalance(receiverAccount.getBalance().add(executeTransferDtoRequest.getTransferSum()));
         } catch (AppLogicException exception){
-            limitService.returnLimit(clientId, executeTransferDtoRequest.getTransferSum());
+            limitService.rollbackLimit(clientId, executeTransferDtoRequest.getTransferSum());
             throw exception;
         }
     }

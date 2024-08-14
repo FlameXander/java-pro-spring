@@ -10,8 +10,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Schema(description = "ДТО запроса работы с лимитом")
+@Schema(description = "ДТО запроса необходимого лимита")
 public class LimitDtoRequest {
-    private Long clientId;
     private BigDecimal money;
 }

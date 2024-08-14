@@ -1,4 +1,4 @@
-package org.example.entities;
+package ru.flamexander.transfer.service.limits.backend.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

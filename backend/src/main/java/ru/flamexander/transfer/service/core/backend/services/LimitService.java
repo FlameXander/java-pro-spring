@@ -12,13 +12,13 @@ import java.math.BigDecimal;
 public class LimitService {
     private final LimitsServiceIntegration limitsServiceIntegration;
 
-    public boolean hasLimit(Long clientId, BigDecimal amount){
-        LimitDtoRequest limitDtoRequest = new LimitDtoRequest(clientId, amount);
-        return limitsServiceIntegration.getLimit(limitDtoRequest).isHasLimit();
+    public boolean getLimit(Long clientId, BigDecimal amount){
+        LimitDtoRequest limitDtoRequest = new LimitDtoRequest(amount);
+        return limitsServiceIntegration.getLimit(limitDtoRequest, clientId).isHasLimit();
     }
 
-    public void returnLimit(Long clientId, BigDecimal amount){
-        LimitDtoRequest limitDtoRequest = new LimitDtoRequest(clientId, amount);
-        limitsServiceIntegration.returnLimit(limitDtoRequest);
+    public void rollbackLimit(Long clientId, BigDecimal amount){
+        LimitDtoRequest limitDtoRequest = new LimitDtoRequest(amount);
+        limitsServiceIntegration.rollbackLimit(limitDtoRequest, clientId);
     }
 }
