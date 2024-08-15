@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
+import ru.flamexander.transfer.service.core.backend.factories.RestClientFactory;
 
 @Configuration
 @EnableConfigurationProperties({
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
         LimitsServiceProperties.class
 })
 public class AppConfig {
+    private final RestClientFactory restClientFactory = new RestClientFactory();
     //    @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
@@ -23,13 +25,12 @@ public class AppConfig {
     @Bean
     @ConditionalOnMissingBean(RestTemplate.class)
     public RestClient clientsInfoClient(ClientsInfoServiceProperties properties) {
-        return RestClient.builder()
-                .requestFactory(new HttpComponentsClientHttpRequestFactory())
-                .baseUrl(properties.getUrl())
-//                .defaultUriVariables(Map.of("variable", "foo"))
-//                .defaultHeader("My-Header", "Foo")
-//                .requestInterceptor(myCustomInterceptor)
-//                .requestInitializer(myCustomInitializer)
-                .build();
+        return restClientFactory.createRestClient(properties);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(RestTemplate.class)
+    public RestClient limitsClient(LimitsServiceProperties properties) {
+        return restClientFactory.createRestClient(properties);
     }
 }

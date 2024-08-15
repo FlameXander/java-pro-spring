@@ -35,6 +35,6 @@ integrations:
     read-timeout: 30s
     write-timeout: 2s
   limits-service:
-    url: "http://localhost:8191/api/v1/clients"
+    url: "http://localhost:8191/api/v1/limits"
     read-timeout: 20s
     write-timeout: 1s
