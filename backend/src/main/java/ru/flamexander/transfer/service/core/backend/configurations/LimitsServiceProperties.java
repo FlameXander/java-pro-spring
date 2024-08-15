@@ -9,7 +9,7 @@ import java.time.Duration;
 @NoArgsConstructor
 @Data
 @ConfigurationProperties("integrations.limits-service")
-public class LimitsServiceProperties {
+public class LimitsServiceProperties implements RestProperties {
     private String url;
     private Duration readTimeout;
     private Duration writeTimeout;
