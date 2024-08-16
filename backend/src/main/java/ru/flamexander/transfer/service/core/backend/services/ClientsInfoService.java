@@ -14,7 +14,7 @@ public class ClientsInfoService {
         return clientsInfoServiceIntegration.getClientInfo(id);
     }
 
-    public boolean isClientBlocker(Long id) {
+    public boolean isClientBlocked(Long id) {
         ClientInfoResponseDto clientInfo = getClientInfo(id);
         return !clientInfo.getStatus().equals("ACTIVE");
     }

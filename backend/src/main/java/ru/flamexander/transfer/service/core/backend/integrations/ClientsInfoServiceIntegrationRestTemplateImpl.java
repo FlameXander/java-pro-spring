@@ -6,9 +6,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import ru.flamexander.transfer.service.core.backend.dtos.ClientInfoResponseDto;
 import ru.flamexander.transfer.service.core.backend.errors.AppLogicException;
+
+import java.net.ConnectException;
 
 @Component
 @RequiredArgsConstructor

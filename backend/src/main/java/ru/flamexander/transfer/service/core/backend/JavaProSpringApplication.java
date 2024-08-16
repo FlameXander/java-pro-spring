@@ -13,9 +13,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 	- Обсудить как взаимодействует большое количество сервисов
 
 	Домашнее задание:
-	- Переведите интеграцию с мс лимитов на RestClient
-	- Добавьте возможность задавать readTimeout и writeTimeout
-	- Сделайте RestClientFactory, который умеет из Properties собирать готовый RestClient
+	- Подготовить wiremock для мс лимитов в основном сервисе
+	- Подготовить скрипты наполнения БД 100 переводами (чтобы можно было удобно историю проверять)
+	- Пропишите README.md как новому разработчику запустить сервис
 */
 
 @SpringBootApplication
