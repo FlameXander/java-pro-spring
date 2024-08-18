@@ -3,4 +3,5 @@ include 'api'
 include 'backend'
 include 'clients-service'
 include 'limit-service'
+include 'dev'
 
