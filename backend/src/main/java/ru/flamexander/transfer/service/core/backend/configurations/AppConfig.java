@@ -32,4 +32,14 @@ public class AppConfig {
     public RestClient limitsClient(LimitsServiceProperties properties) {
         return restClientFactory.createRestClient(properties);
     }
+
+    @Bean
+    public CommonsRequestLoggingFilter logFilter() {
+        CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
+        filter.setIncludeQueryString(true);
+        filter.setIncludePayload(true);
+        filter.setMaxPayloadLength(10000);
+        filter.setIncludeHeaders(true);
+        return filter;
+    }
 }

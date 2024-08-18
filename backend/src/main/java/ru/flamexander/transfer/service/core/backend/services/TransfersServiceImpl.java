@@ -26,10 +26,10 @@ public class TransfersServiceImpl implements TransfersService {
     @Transactional
     @Override
     public void execute(Long clientId, ExecuteTransferDtoRequest executeTransferDtoRequest) {
-        if (clientsInfoService.isClientBlocker(clientId)) {
+        if (clientsInfoService.isClientBlocked(clientId)) {
             throw new AppLogicException("SENDER_IS_BLOCKED", "Клиент-отправитель id = " + clientId + " не может выполнить отправку перевода, так как заблокирован");
         }
-        if (clientsInfoService.isClientBlocker(executeTransferDtoRequest.getReceiverId())) {
+        if (clientsInfoService.isClientBlocked(executeTransferDtoRequest.getReceiverId())) {
             throw new AppLogicException("RECEIVER_IS_BLOCKED", "Невозможно выполнить перевод заблокированному клиенту с id = " + executeTransferDtoRequest.getReceiverId());
         }
 //        if (appProperties.getBlockedAccountsMasks().stream().anyMatch(
