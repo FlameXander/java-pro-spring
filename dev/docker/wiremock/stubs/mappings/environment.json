@@ -3,11 +3,16 @@
     {
       "request": {
         "method": "POST",
-        "urlPath": "/auth-service/oauth2/token"
+        "urlPath": "/api/v1/limits/get",
+        "headers": {
+          "clientId": {
+            "equalTo": "1"
+          }
+        }
       },
       "response": {
         "status": 200,
-        "bodyFileName": "jwt-token.json",
+        "bodyFileName": "has_limit.json",
         "headers": {
           "Content-Type": "application/json"
         },
@@ -16,59 +21,39 @@
     },
     {
       "request": {
-        "method": "GET",
-        "urlPath": "/limits-service/api/v1/limits/"
+        "method": "POST",
+        "urlPath": "/api/v1/limits/get",
+        "headers": {
+          "clientId": {
+            "equalTo": "2"
+          }
+        }
       },
       "response": {
         "status": 200,
-        "bodyFileName": "remaining-limit.json",
+        "bodyFileName": "has_not_limit.json",
         "headers": {
           "Content-Type": "application/json"
-        }
+        },
+        "fixedDelayMilliseconds": 0
       }
     },
     {
       "request": {
-        "method": "GET",
-        "queryParameters":{
-          "id": {
+        "method": "POST",
+        "urlPath": "/api/v1/limits/rollback",
+        "headers": {
+          "clientId": {
             "equalTo": "1"
           }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
         },
-        "urlPath": "/limits-service/api/v1/limits/idexample"
-      },
-      "response": {
-        "status": 200,
-        "bodyFileName": "ok-result.json",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      }
-    },
-    {
-      "request": {
-        "method": "GET",
-        "urlPath": "/clients-service/api/v1/clients/1"
-      },
-      "response": {
-        "status": 200,
-        "bodyFileName": "1-active-client.json",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      }
-    },
-    {
-      "request": {
-        "method": "GET",
-        "urlPath": "/clients-service/api/v1/clients/2"
-      },
-      "response": {
-        "status": 200,
-        "bodyFileName": "2-blocked-client.json",
-        "headers": {
-          "Content-Type": "application/json"
-        }
+        "fixedDelayMilliseconds": 0
       }
     }
   ]

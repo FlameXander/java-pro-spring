@@ -9,7 +9,7 @@ import java.time.Duration;
 @NoArgsConstructor
 @Data
 @ConfigurationProperties("integrations.clients-info-service")
-public class ClientsInfoServiceProperties {
+public class ClientsInfoServiceProperties implements RestProperties {
     private String url;
     private Duration readTimeout;
     private Duration writeTimeout;

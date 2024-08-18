@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   wiremock-service:
-    image: rodolpheche/wiremock
+    image: wiremock/wiremock:latest
     container_name: wiremock-service
     ports:
       - "8822:8080"
