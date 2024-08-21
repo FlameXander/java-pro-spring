@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: limits-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: posgres
+  jpa:
+    show-sql: true
+  data:
+    jdbc:
+      dialect: postgresql
+  flyway:
+    enabled: false
+
+application:
+  limits:
+    default_limit: 10000
