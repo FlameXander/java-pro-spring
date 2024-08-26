@@ -37,7 +37,7 @@ public class AccountsService {
         }
 
         Account account = new Account(clientId, createAccountDto.getInitialBalance());
-        account.setAccountNumber("1234567891234567");
+        account.setAccountNumber(createAccountDto.getAccountNumber());
 
         Account savedAccount = accountsRepository.save(account);
         if (savedAccount == null) {
@@ -51,8 +51,7 @@ public class AccountsService {
         if (account != null) {
             accountsRepository.save(account);
         } else {
-            // Логирование ошибки
-            System.out.println("Attempted to save a null account");
+           logger.info("Attempted to save a null account");
         }
     }
 }

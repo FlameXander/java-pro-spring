@@ -10,5 +10,6 @@ import java.math.BigDecimal;
 @Data
 @Schema(description = "ДТО для создания нового счета")
 public class CreateAccountDto {
+    private String accountNumber;
     private BigDecimal initialBalance;
 }

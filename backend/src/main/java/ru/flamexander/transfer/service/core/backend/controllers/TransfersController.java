@@ -27,7 +27,11 @@ public class TransfersController {
     @Operation(summary = "Перевод")
     @PostMapping("/execute")
     public ExecuteTransferDtoResult executeTransfer(@RequestBody ExecuteTransferDtoRequest request) {
-        return transferService.transfer(request);
+        Transfer transfer = transferService.transfer(request);
+        return new ExecuteTransferDtoResult(
+                transfer.getSenderAccountNumber(),
+                transfer.getRecipientAccountNumber(),
+                transfer.getTransferAmount());
     }
     @Operation(summary = "Результат")
     @GetMapping
