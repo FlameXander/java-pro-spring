@@ -4,10 +4,12 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     driver-class-name: org.postgresql.Driver
-    username: admin
-    password: admin
+    username: postgres
+    password: postgres
   jpa:
     show-sql: true
   data:
     jdbc:
       dialect: postgresql
+  flyway:
+    enabled: false

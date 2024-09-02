@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class FieldValidationError {
-    private String fieldName;
-    private String message;
+    private final String fieldName;
+    private final String message;
 
     public FieldValidationError(String fieldName, String message) {
         this.fieldName = fieldName;

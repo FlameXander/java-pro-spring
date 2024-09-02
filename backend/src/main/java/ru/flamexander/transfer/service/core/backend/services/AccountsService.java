@@ -36,4 +36,8 @@ public class AccountsService {
         logger.info("Account id = {} created from {}", account.getId(), createAccountDto);
         return account;
     }
+
+    public void save(Account account) {
+        accountsRepository.save(account);
+    }
 }
