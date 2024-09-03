@@ -18,6 +18,7 @@ import ru.flamexander.transfer.service.core.backend.errors.ErrorDto;
 import ru.flamexander.transfer.service.core.backend.errors.ResourceNotFoundException;
 import ru.flamexander.transfer.service.core.backend.services.AccountsService;
 
+import java.math.BigDecimal;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 

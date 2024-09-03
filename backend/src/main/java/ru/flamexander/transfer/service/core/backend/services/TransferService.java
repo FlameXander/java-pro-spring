@@ -1,22 +1,65 @@
 package ru.flamexander.transfer.service.core.backend.services;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.flamexander.transfer.service.core.api.dtos.ExecuteTransferDtoRequest;
 import ru.flamexander.transfer.service.core.backend.entities.Account;
+import ru.flamexander.transfer.service.core.backend.entities.Transfer;
 import ru.flamexander.transfer.service.core.backend.errors.AppLogicException;
+import ru.flamexander.transfer.service.core.backend.repositories.TransferRepository;
+import ru.flamexander.transfer.service.core.backend.statuses.TransferStatus;
 import ru.flamexander.transfer.service.core.backend.validators.ExecuteTransferValidator;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class TransferService {
+    private static final Logger logger = LoggerFactory.getLogger(TransferService.class);
     private final AccountsService accountsService;
     private final ExecuteTransferValidator executeTransferValidator;
+    private final TransferRepository transferRepository;
 
     @Transactional
-    public void transfer(Long sourceAccountId, Long targetAccountId) {
-        Account source = accountsService.getAccountById(1L, sourceAccountId).orElseThrow(() -> new AppLogicException("TRANSFER_SOURCE_ACCOUNT_NOT_FOUND", "Перевод невозможен поскольку не существует счет отправителя"));
-        Account target = accountsService.getAccountById(1L, targetAccountId).orElseThrow(() -> new AppLogicException("TRANSFER_TARGET_ACCOUNT_NOT_FOUND", "Перевод невозможен поскольку не существует счет получателяч"));
+    public Transfer transfer(ExecuteTransferDtoRequest request) {
+        executeTransferValidator.validate(request);
+        Account source = accountsService.getAccountByAccountNumber(request.getSourceAccountNumber())
+                .orElseThrow(() -> new AppLogicException("TRANSFER_SOURCE_ACCOUNT_NOT_FOUND",
+                                                        "Перевод невозможен поскольку не существует счет отправителя"));
+        Account target = accountsService.getAccountByAccountNumber(request.getTargetAccountNumber()).
+                orElseThrow(() -> new AppLogicException("TRANSFER_TARGET_ACCOUNT_NOT_FOUND",
+                                                        "Перевод невозможен поскольку не существует счет получателя"));
+        logger.info("Source account balance before transfer: " + source.getBalance());
+        logger.info("Target account balance before transfer: " + target.getBalance());
+        Transfer transfer = new Transfer(
+                source.getClientId(),
+                source.getAccountNumber(),
+                target.getClientId(),
+                target.getAccountNumber(),
+                request.getAmount()
+        );
+        transferRepository.save(transfer);
+        BigDecimal transferAmount = request.getAmount();
+        source.setBalance(source.getBalance().subtract(transferAmount));
+        accountsService.saveAccount(source);
+        logger.info("Source account balance after transfer: " + source.getBalance());
+        target.setBalance(target.getBalance().add(request.getAmount()));
+        accountsService.saveAccount(target);
+        logger.info("Target account balance after transfer: " + target.getBalance());
+        setTransferStatus(transfer, TransferStatus.COMPLETED);
 
+        return transfer;
+    }
+
+    private void setTransferStatus(Transfer transfer, TransferStatus status){
+        transfer.setStatus(status);
+        transferRepository.save(transfer);
+    }
+    public List<Transfer> getAllTransfers(Long clientId) {
+        return transferRepository.findAllBySourceOrDestinationClientId(clientId);
     }
 }
