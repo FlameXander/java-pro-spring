@@ -12,5 +12,5 @@ public interface LimitRepository extends JpaRepository<Limit, Long> {
 
     @Modifying
     @Query(value = "UPDATE limits SET limit = limit_max", nativeQuery = true)
-    void resetAllLimits();
+    void resetAllLimitsToMax();
 }

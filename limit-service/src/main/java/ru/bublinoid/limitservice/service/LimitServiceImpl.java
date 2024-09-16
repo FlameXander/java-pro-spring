@@ -43,7 +43,8 @@ public class LimitServiceImpl implements LimitService {
     }
 
     @Scheduled(cron = "0 0 0 * * ?")
-    protected void resetLimit() {
-        limitRepository.resetAllLimits();
+    @Transactional
+    public void resetLimit() {
+        limitRepository.resetAllLimitsToMax();
     }
 }
