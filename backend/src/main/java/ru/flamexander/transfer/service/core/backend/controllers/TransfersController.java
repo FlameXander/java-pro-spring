@@ -7,8 +7,6 @@ import ru.flamexander.transfer.service.core.backend.errors.InsufficientLimitExce
 import ru.flamexander.transfer.service.core.backend.services.TransfersService;
 import ru.flamexander.transfer.service.core.backend.services.LimitsService;
 
-import java.math.BigDecimal;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/transfers")
@@ -21,8 +19,7 @@ public class TransfersController {
             @RequestHeader Long clientId,
             @RequestBody ExecuteTransferDtoRequest executeTransferDtoRequest
     ) {
-        BigDecimal transferSum = executeTransferDtoRequest.getTransferSum();
-        boolean limitDeducted = limitsService.deductLimit(clientId, transferSum.longValue());
+        boolean limitDeducted = limitsService.deductLimit(clientId, executeTransferDtoRequest.getTransferSum().longValue());
 
         if (!limitDeducted) {
             throw new InsufficientLimitException("Недостаточно лимита для выполнения перевода.");
@@ -31,7 +28,7 @@ public class TransfersController {
         try {
             transfersService.execute(clientId, executeTransferDtoRequest);
         } catch (Exception e) {
-            limitsService.rollbackLimit(clientId, transferSum.longValue());
+            limitsService.rollbackLimit(clientId, executeTransferDtoRequest.getTransferSum().longValue());
             throw e;
         }
     }
