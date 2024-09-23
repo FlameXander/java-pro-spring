@@ -32,9 +32,7 @@ app:
 integrations:
   clients-info-service:
     url: "http://localhost:8190/api/v1/clients"
-    read-timeout: 30s
-    write-timeout: 2s
-  limits-service:
-    url: "http://localhost:8191/api/v1/clients"
-    read-timeout: 20s
-    write-timeout: 1s
+  limits-info-service:
+    url: "http://localhost:8192/api/v1/limits"
+    read-timeout: 30
+    write-timeout: 2
